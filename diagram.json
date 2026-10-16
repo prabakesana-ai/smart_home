@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "author": "Smart Home Standalone AI Project",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-dht22", "id": "dht1", "top": -120, "left": 150, "attrs": { "temperature": "32" } },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": 220, "left": -140, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay2", "top": 220, "left": 20, "attrs": {} },
+    { "type": "wokwi-resistor", "id": "r1", "top": 330, "left": -130, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": 330, "left": 30, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lamp1", "top": 390, "left": -110, "attrs": { "color": "yellow", "label": "Lampu 1 (Ruang)" } },
+    { "type": "wokwi-led", "id": "lamp2", "top": 390, "left": 50, "attrs": { "color": "white", "label": "Lampu Depan (LDR)" } },
+    { "type": "wokwi-resistor", "id": "r3", "top": 120, "left": 240, "attrs": { "value": "100" } },
+    { "type": "wokwi-led", "id": "irled", "top": 60, "left": 300, "attrs": { "color": "red", "label": "IR TX (Pulsa)" } },
+    { "type": "wokwi-resistor", "id": "r4", "top": 190, "left": 240, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "warnled", "top": 130, "left": 300, "attrs": { "color": "orange", "label": "WARNING" } },
+    { "type": "wokwi-resistor", "id": "r_ac", "top": 250, "left": 240, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "acled", "top": 200, "left": 300, "attrs": { "color": "blue", "label": "AC Unit Status" } },
+    { "type": "wokwi-slide-switch", "id": "sw1", "top": 300, "left": 220, "attrs": {} },
+    { "type": "wokwi-photoresistor-sensor", "id": "ldr1", "top": -130, "left": -320, "attrs": { "lux": "500" } },
+    { "type": "wokwi-pir-motion-sensor", "id": "pirkm", "top": -130, "left": -130, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay3", "top": 220, "left": -300, "attrs": {} },
+    { "type": "wokwi-resistor", "id": "r5", "top": 330, "left": -290, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "lamp3", "top": 390, "left": -270, "attrs": { "color": "green", "label": "Lampu Kamar Mandi (PIR)" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+
+    [ "dht1:VCC", "esp:3V3", "red", [] ],
+    [ "dht1:GND", "esp:GND.1", "black", [] ],
+    [ "dht1:SDA", "esp:15", "green", [] ],
+
+    [ "relay1:VCC", "esp:5V", "red", [] ],
+    [ "relay1:GND", "esp:GND.1", "black", [] ],
+    [ "relay1:IN", "esp:26", "blue", [] ],
+    [ "relay1:COM", "esp:3V3", "red", [] ],
+    [ "relay1:NO", "r1:1", "yellow", [] ],
+    [ "r1:2", "lamp1:A", "yellow", [] ],
+    [ "lamp1:C", "esp:GND.1", "black", [] ],
+
+    [ "relay2:VCC", "esp:5V", "red", [] ],
+    [ "relay2:GND", "esp:GND.1", "black", [] ],
+    [ "relay2:IN", "esp:27", "blue", [] ],
+    [ "relay2:COM", "esp:3V3", "red", [] ],
+    [ "relay2:NO", "r2:1", "white", [] ],
+    [ "r2:2", "lamp2:A", "white", [] ],
+    [ "lamp2:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:4", "r3:1", "purple", [] ],
+    [ "r3:2", "irled:A", "purple", [] ],
+    [ "irled:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:25", "r4:1", "orange", [] ],
+    [ "r4:2", "warnled:A", "orange", [] ],
+    [ "warnled:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:18", "r_ac:1", "blue", [] ],
+    [ "r_ac:2", "acled:A", "blue", [] ],
+    [ "acled:C", "esp:GND.1", "black", [] ],
+
+    [ "sw1:1", "esp:3V3", "red", [] ],
+    [ "sw1:2", "esp:14", "green", [] ],
+    [ "sw1:3", "esp:GND.1", "black", [] ],
+
+    [ "ldr1:VCC", "esp:3V3", "red", [] ],
+    [ "ldr1:GND", "esp:GND.1", "black", [] ],
+    [ "ldr1:AO", "esp:34", "orange", [] ],
+
+    [ "pirkm:VCC", "esp:5V", "red", [] ],
+    [ "pirkm:GND", "esp:GND.1", "black", [] ],
+    [ "pirkm:OUT", "esp:32", "green", [] ],
+
+    [ "relay3:VCC", "esp:5V", "red", [] ],
+    [ "relay3:GND", "esp:GND.1", "black", [] ],
+    [ "relay3:IN", "esp:33", "blue", [] ],
+    [ "relay3:COM", "esp:3V3", "red", [] ],
+    [ "relay3:NO", "r5:1", "green", [] ],
+    [ "r5:2", "lamp3:A", "green", [] ],
+    [ "lamp3:C", "esp:GND.1", "black", [] ]
+  ],
+  "dependencies": {}
+}
